@@ -1,0 +1,13 @@
+﻿<h3>@Message</h3>
+<h3>@LuckyNumber</h3>
+
+@code {
+	[CascadingParameter(Name = "Message")]
+	public string Message { get; set; }
+
+	[CascadingParameter(Name = "LuckyNumber")]
+	public string LuckyNumber { get; set; }
+
+	[CascadingParameter]
+	public string Name { get; set; }
+}

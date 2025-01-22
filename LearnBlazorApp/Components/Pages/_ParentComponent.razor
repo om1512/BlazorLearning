@@ -1,0 +1,60 @@
+﻿@page "/learnBlazor/parentcomponent"
+@page "/learnBlazor/parentcomponent/{name}"
+@inject NavigationManager NavigationManager
+<CascadingValue Value="@message" Name="Message">
+	<CascadingValue Value="@Number" Name="LuckyNumber">
+		<_ChildComponent @ref="ChildComp" Name="Hello World">
+			<ChildSomeContent>DADFGSADKHF</ChildSomeContent>
+			<ChildContent>CSFADHB</ChildContent>
+		</_ChildComponent>
+
+	</CascadingValue>
+	
+</CascadingValue>
+<NavLink href="/learnBlazor/parentcomponent/Bhavik?Param1=Om">click</NavLink>
+
+<button @onclick="() => ChildComp.showSweetAlert()">Click</button>
+<p>@name</p>
+<div id="tag">Hello</div>
+<div>@Param1 @Param2
+</div>
+@code {
+
+	private _ChildComponent ChildComp;
+
+	[Parameter]
+	public string name { get; set; } = "";
+	public string message = "fksdb";
+	public string Number = "1";
+
+	public string Param1 { get; set; } = "";
+	public string Param2 { get; set; } = "";
+
+
+	// when ever url gets changed this method calls
+	// protected override void OnParametersSet()
+	// {
+	// 	LoadParameters();
+	// }
+
+
+	// when you enter url and click enter then the page will get new query parameters but
+	protected override void OnInitialized()
+	{
+		LoadParameters();
+	}
+
+	private void LoadParameters()
+	{
+		var uri = new Uri(NavigationManager.Uri);
+		var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+		Param1 = query["Param1"];
+		Param2 = query["Param2"];
+	}
+
+
+	private void NavigateToAnyUrl()
+	{
+		NavigationManager.NavigateTo("/anyurl");
+	}
+}

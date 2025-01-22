@@ -1,0 +1,24 @@
+﻿@inject IJSRuntime JsRuntime
+
+
+<div class="alert alert-info">@Name</div>
+<div class="alert alert-primary">@ChildContent</div>
+<div class="alert alert-primary">@ChildSomeContent</div>
+
+<_GrandChild></_GrandChild>
+@code {
+
+	[Parameter]
+	public string Name { get; set; } = "om";
+	
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+	[Parameter]
+	public RenderFragment ChildSomeContent { get; set; }
+
+	public async Task showSweetAlert()
+	{
+		await JsRuntime.InvokeVoidAsync("displaySwal", "error", "message");
+	}
+}

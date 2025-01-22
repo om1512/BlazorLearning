@@ -1,0 +1,46 @@
+﻿@page "/blazorJs"
+@inject IJSRuntime JsRuntime
+<h3>BlazorJs</h3>
+
+<div class="row">
+	<button class="btn btn-secondary" @onclick="TestDialog">Test Confirm Box</button>
+</div>
+@if (status)
+{
+	<p>Confirmed</p>
+}
+else
+{
+	<p>Pending confirmation</p>
+}
+
+<button class="btn btn-success" @onclick="success">Toastr Success</button>
+<button class="btn btn-danger" @onclick="failure">Toastr Failure</button>
+
+<button class="btn btn-secondary" @onclick="showSweetAlert">Show Sweet Alert</button>
+
+@code {
+	private string confirmMessage = "Are you sure you want to delete ?";
+	private bool status { get; set; }
+	private async Task TestDialog()
+	{
+		status = await JsRuntime.InvokeAsync<bool>("confirm", confirmMessage);
+	}
+
+	private async Task success()
+	{
+		// await JsRuntime.InvokeVoidAsync("showToastr", "success", "Success Notification");
+		await JsRuntime.ToastrSuccess("Success Notification");
+	}
+
+	private async Task failure()
+	{
+		// await JsRuntime.InvokeVoidAsync("showToastr", "error", "Error Notification");
+		await JsRuntime.ToastrError("Error Notification");
+	}
+
+	private async Task showSweetAlert()
+	{
+		await JsRuntime.InvokeVoidAsync("displaySwal", "error", "message");
+	}
+}
